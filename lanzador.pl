@@ -1,102 +1,55 @@
-#!/usr/bin/perl
-#**************************************************************
-#         		Pontificia Universidad Javeriana
-#     Autor: David Esteban Beltrán Gómez
-#     Fecha: 30 Octubre 2025
-#     Materia: Sistemas Operativos
-#     Tema: Taller de Evaluación de Rendimiento
-#     Fichero: script automatización ejecución por lotes 
-#****************************************************************/
-
+#!/usr/bin/env perl
+#######################################################################################
+#* Fecha: 30 Octubre 2025
+#* Autor: Xamuel Pérez Madrigal
+#* Programa:
+#*      agregar_estadisticas.py
+#* Propósito:
+#*      Lanzar múltiples programas de multiplicación de matrices
+#* 	    se ejecutan los 4 experimentos 30 veces cada combinación de N y T
+#*      y guardar las estadísticas en archivos .dat
+######################################################################################*/
 use strict;
 use warnings;
+use File::Path qw(make_path);
 
-# Declaración explícita de variables (requerido por 'use strict')
-my $Path;
-my $Nombre_Ejecutable;
-my @Size_Matriz;
-my @Num_Hilos;
-my $Repeticiones;
-my $Directorio_Resultados;
-my $file;
-my $size;
-my $hilo;
-my $i;
-my $p = 0;
+# Configuración
+my @programas = ("./mmClasicaOpenMP", "./mmClasicaPosix", "./mmClasicaFork", "./mmFilasOpenMP");
+my @Ns        = (64, 128, 256, 512);   # tamaños de matriz
+my @hilos     = (1, 2, 4, 8);          # números de hilos a probar
+my $REPS      = 30;                    # repeticiones por combinación
+my $OUT_DIR   = "resultados";          # carpeta de salida
+# --------------------------------
 
-# Se Obtiene el path del directorio actual
-$Path = `pwd`;
-# Si existe un salto de linea en el path se elimina
-chomp($Path);
+make_path($OUT_DIR) unless -d $OUT_DIR;
 
-# Si se pasa un argumento, se usa como nombre del ejecutable; si no, se pide uno por defecto
-if (@ARGV) {
-	$Nombre_Ejecutable = $ARGV[0];
-} else {
-	print "No se recibió un nombre de ejecutable.\n";
-	print "Usando el valor por defecto: mmClasicaOpenMP\n";
-	$Nombre_Ejecutable = "mmClasicaOpenMP";
+for my $N (@Ns) {
+  for my $t (@hilos) {
+    for my $prog (@programas) {
+
+      (my $tag = $prog) =~ s{^\./}{};
+      my $outfile = "$OUT_DIR/${tag}_N${N}_T${t}.dat";
+      open my $FH, ">", $outfile or die "No puedo crear $outfile: $!";
+
+      for (my $r = 1; $r <= $REPS; $r++) {
+        my $cmd = "$prog $N $t";
+        my $out = `$cmd`;
+        if ($? != 0) {
+          die "Fallo ejecutando '$cmd' (status=$?):\n$out\n";
+        }
+        # Extrae el ÚLTIMO número de la salida (tiempo en microsegundos)
+        my ($time_us) = ($out =~ /(\d+(?:\.\d+)?)(?!.*\d)/);
+        die "No pude extraer el tiempo de la salida:\n$out\n" unless defined $time_us;
+
+        print $FH "$time_us\n";
+      }
+
+      close $FH;
+      print "[OK] Generado $outfile\n";
+    }
+  }
 }
 
-# Tamaños de las matrices a usar en un "Array"
-@Size_Matriz = ("2","10","20");
-# Cantidad de hilos con los que se ejecutara el programa en un "Array"
-@Num_Hilos = (1,2,4,8,16,20);
-# Cantidad de veces que se ejecutarán las combinaciones
-$Repeticiones = 4;
+print "\nListo. Los .dat quedaron en '$OUT_DIR/'.\n"
 
-# Crear carpeta de resultados específicos para el ejecutable si no existe
-$Directorio_Resultados = "$Path/Resultados_$Nombre_Ejecutable";
-mkdir $Directorio_Resultados unless -d $Directorio_Resultados;
 
-print "\n\n   INICIO DE EJECUCIONES AUTOMATIZADAS\n";
-print "   Ejecutable: $Nombre_Ejecutable\n";
-print "   Resultados se guardarán en: $Directorio_Resultados\n";
-
-# Primer ciclo que itera en los tamaños de matriz que se definieron
-foreach $size (@Size_Matriz){
-
-	# --- agregado ---
-	print "\n------------------------------------------------------------\n";
-	print " Ejecutando pruebas para MATRIZ de tamaño $size x $size\n";
-	print "------------------------------------------------------------\n";
-
-	# Segundo ciclo anindado que itera en los hilos que se definieron
-	foreach $hilo (@Num_Hilos) {
-
-		# --- agregado ---
-		print "\n>> Configuración actual: $hilo hilo(s) | Tamaño matriz: $size x $size\n";
-
-		# Genera el archivo de salida referente a la combinación de Matrices e Hilos
-		$file = "$Directorio_Resultados/$Nombre_Ejecutable-".$size."-Hilos-".$hilo.".dat";
-
-		# Tercer ciclo anidado que realiza las repeticiones indicadas
-		for ($i=0; $i<$Repeticiones; $i++) {
-
-			# Ejecuta el programa y lo que genere se guarda en el archivo
-			system("$Path/$Nombre_Ejecutable $size $hilo >> $file");
-
-			# Verificar si se ejecuto todo bien porque si no la funcion system() retorna un valor !=0
-			if ($? != 0) {
-    			print "\n Hubo un error al ejecutar: $Nombre_Ejecutable $size $hilo\n";
-			} else {
-				# --- agregado ---
-				print "\n Ejecución repetición ".($i+1)." completada exitosamente.\n";
-			}
-
-			# Mostrar el comando ejecutado
-			printf("  Comando: $Path/$Nombre_Ejecutable $size $hilo\n");
-			
-			# Al completar otra ejecucion aumentar $p
-        	$p++;
-		}
-
-		# Mostrar donde se guardaron los resultados
-		print "  ➤ Resultados guardados en: $file\n";
-	}
-}
-
-# Mensaje final
-print "\n\n   TODAS LAS EJECUCIONES FINALIZADAS EXITOSAMENTE\n";
-print "   Total de ejecuciones realizadas: $p\n";
-print "   Archivos generados en: $Directorio_Resultados\n";

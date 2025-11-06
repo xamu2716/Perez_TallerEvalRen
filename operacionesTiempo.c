@@ -1,3 +1,11 @@
+/*#######################################################################################
+ #* Fecha: 30 Octubre 2025
+ #* Autor: Xamuel Pérez Madrigal
+ #* Programa:
+ #*      operaciones para medición de tiempo
+ #* Propósito:
+ #*      Implementar funciones para iniciar y finalizar la medición de tiempo.
+ #######################################################################################*/
 #include <stdio.h>
 #include <sys/time.h>
 #include "operacionesTiempo.h"

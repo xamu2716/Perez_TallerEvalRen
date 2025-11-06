@@ -1,3 +1,13 @@
+/*#######################################################################################
+ #* Fecha: 30 Octubre 2025
+ #* Autor: Xamuel Pérez Madrigal
+ #* Programa:
+ #*      Multiplicación de Matrices algoritmo clásico
+ #* Versión:
+ #*      Paralelismo con Procesos Fork
+ #* Proposito:
+ #*      Implementar la multiplicación de matrices utilizando procesos fork para paralelismo.
+ #######################################################################################*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

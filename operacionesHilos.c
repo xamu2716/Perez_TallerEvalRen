@@ -1,3 +1,13 @@
+/*#######################################################################################
+ #* Fecha: 30 Octubre 2025
+ #* Autor: Xamuel Pérez Madrigal
+ #* Programa:
+ #*      Multiplicación de Matrices algoritmo clásico
+ #* Versión:
+ #*      Paralelismo con Hilos Pthreads "Posix"
+ #* Proposito:
+    #*      Implementar la multiplicación de matrices utilizando hilos para paralelismo.
+ #######################################################################################*/
 #include <pthread.h>
 #include <stdlib.h>
 #include "operacionesHilos.h"

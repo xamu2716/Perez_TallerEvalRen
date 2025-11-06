@@ -1,3 +1,11 @@
+/*#######################################################################################
+ #* Fecha: 30 Octubre 2025
+ #* Autor: Xamuel Pérez Madrigal
+ #* Programa:
+ #*      Multiplicación de Matrices algoritmo clásico
+ #* Versión:
+ #*      Paralelismo con Hilos Pthreads "Posix"
+ #######################################################################################*/
 #ifndef OPERACIONES_HILOS_H
 #define OPERACIONES_HILOS_H
 

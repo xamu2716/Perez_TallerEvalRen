@@ -1,3 +1,13 @@
+/*#######################################################################################
+ #* Fecha: 30 Octubre 2025
+ #* Autor: Xamuel Pérez Madrigal
+ #* Programa:
+ #*      Multiplicación de Matrices algoritmo clásico
+ #* Versión:
+ #*      Operaciones con Matrices
+ #*Proposito:
+    #*      Implementar funciones para inicializar, imprimir y multiplicar matrices.
+ #######################################################################################*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "operacionesMatrices.h"

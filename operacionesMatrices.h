@@ -1,3 +1,11 @@
+/*#######################################################################################
+ #* Fecha: 30 Octubre 2025
+ #* Autor: Xamuel Pérez Madrigal
+ #* Programa:
+ #*      Multiplicación de Matrices algoritmo clásico
+ #* Versión:
+ #*      Operaciones con Matrices
+ #######################################################################################*/
 #ifndef OPERACIONES_MATRICES_H
 #define OPERACIONES_MATRICES_H
 

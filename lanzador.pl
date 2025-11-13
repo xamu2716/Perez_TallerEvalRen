@@ -15,7 +15,7 @@ use File::Path qw(make_path);
 
 # Configuración
 my @programas = ("./mmClasicaOpenMP", "./mmClasicaPosix", "./mmClasicaFork", "./mmFilasOpenMP");
-my @Ns        = (64, 128, 256, 512);   # tamaños de matriz
+my @Ns        = (64, 256, 512, 1024, 2048);   # tamaños de matriz
 my @hilos     = (1, 2, 4, 8);          # números de hilos a probar
 my $REPS      = 30;                    # repeticiones por combinación
 my $OUT_DIR   = "resultados";          # carpeta de salida

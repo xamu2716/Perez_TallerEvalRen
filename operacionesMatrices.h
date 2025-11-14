@@ -1,6 +1,6 @@
 /*#######################################################################################
  #* Fecha: 30 Octubre 2025
- #* Autor: Xamuel Pérez Madrigal
+ #* Autor: Xamuel Perez Madrigal, Felipe Gomez, David Beltran
  #* Programa:
  #*      Multiplicación de Matrices algoritmo clásico
  #* Versión:

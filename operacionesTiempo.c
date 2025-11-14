@@ -1,6 +1,6 @@
 /*#######################################################################################
  #* Fecha: 30 Octubre 2025
- #* Autor: Xamuel Pérez Madrigal
+ #* Autor: Xamuel Pérez Madrigal, Juan Felipe Gómez López, David Esteban Beltrán
  #* Programa:
  #*      operaciones para medición de tiempo
  #* Propósito:

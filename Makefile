@@ -7,7 +7,7 @@
 #---------------------------------------------------------
 
 GCC = gcc
-CFLAGS = -Wall -O3 -lm
+CFLAGS = -O3 -lm
 FOPENMP = -fopenmp
 POSIX = -lpthread
 
@@ -39,4 +39,4 @@ mmFilasOpenMP: mmFilasOpenMP.c $(FUENTES_COMUNES) $(HEADERS_COMUNES)
 
 # Limpieza de binarios
 clean:
-	rm -f $(PROGRAMAS) *.o
+	$(RM) $(PROGRAMAS) 
